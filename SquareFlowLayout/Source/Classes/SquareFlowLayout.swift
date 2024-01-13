@@ -94,11 +94,12 @@ public class SquareFlowLayout: UICollectionViewFlowLayout {
         for item in 0 ..< collectionView.numberOfItems(inSection: 0) {
             layoutValues.append(flowDelegate?.shouldExpandItem(at: IndexPath(row: item, section: 0)) == true)
         }
+        
         let chunkSize = 3
         let layouts = stride(from: 0, to: layoutValues.count, by: chunkSize).map {
             Array(layoutValues[$0 ..< Swift.min($0 + chunkSize, layoutValues.count)])
         }
-
+        
         func add(rect: CGRect, at idx: Int, in layout: [Bool]) {
             if idx < layout.count {
                 let indexPath = IndexPath(row: index, section: 0)
@@ -109,7 +110,7 @@ public class SquareFlowLayout: UICollectionViewFlowLayout {
                 index = index + 1
             }
         }
-
+        
         for layout in layouts {
             let expandedPosition = ExpandedPosition.of(layoutChunk: layout)
             switch expandedPosition {
